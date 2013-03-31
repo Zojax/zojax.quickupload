@@ -43,7 +43,6 @@ class QuickUpload(object):
             return '{"success": false, "error": "File is None"}'
         title = self.request.get('title')
         name = title
-        import pdb;pdb.set_trace()
         obj = ISODocument()
         obj.title = title or uploadFile.filename
         obj.file = FileData(uploadFile)
