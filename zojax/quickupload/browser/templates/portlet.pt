@@ -1,26 +1,31 @@
-<div class="portlet-quickupload-wrapper">
-    <link href="/@@/fineuploader/fineuploader-3.3.1.css" rel="stylesheet" media="all" />
-    <div id="manual-fine-uploader"></div>
-    <div id="triggerUpload" class="btn btn-primary" style="margin-top: 10px;">
-        <i class="icon-upload icon-white"></i> Upload now
+<div class="z-portlet">
+    <h2 class="z-portlet-header">Quick Upload</h2>
+    <div class="z-portlet-body">
+        <div class="z-portlet-item">
+            <link href="/@@/fineuploader/fineuploader-3.3.1.css" rel="stylesheet" media="all" />
+            <div id="manual-fine-uploader"></div>
+            <div id="triggerUpload" class="z-form-addbutton" style="margin-top: 10px;">
+                <i class="icon-upload icon-white"></i> Upload now
+            </div>
+            <script src="/@@/fineuploader/fineuploader-3.3.1.min.js"></script>
+            <script>
+                var manualuploader = new qq.FineUploader({
+                    element: $('#manual-fine-uploader')[0],
+                    paramsInBody: true,
+                    request: {
+                        endpoint: 'quickuploadAddContent',
+                        customHeaders:{
+                            //'Content-Type': 'application/json'
+                        }
+                    },
+                    autoUpload: false,
+                    text: {
+                        uploadButton: '<i class="icon-plus icon-white"></i> Select Files'
+                }            });
+                $('#triggerUpload').click(function() {
+                    manualuploader.uploadStoredFiles();
+                });
+            </script>
+        </div>
     </div>
-    <script src="/@@/fineuploader/fineuploader-3.3.1.js"></script>
-    <script>
-        var manualuploader = new qq.FineUploader({
-            element: $('#manual-fine-uploader')[0],
-            paramsInBody: true,
-            request: {
-                endpoint: 'quickuploadAddContent',
-                customHeaders:{
-                    //'Content-Type': 'application/json'
-                }
-            },
-            autoUpload: false,
-            text: {
-                uploadButton: '<i class="icon-plus icon-white"></i> Select Files'
-        }            });
-        $('#triggerUpload').click(function() {
-            manualuploader.uploadStoredFiles();
-        });
-    </script>
 </div>

@@ -57,17 +57,10 @@
   </zojax:resourcepackage>
 
   <browser:page
-      for="*"
+      for="zojax.content.documents.interfaces.IDocumentsContainer"
       name="quickuploadAddContent"
       permission="zojax.ModifyContent"
       class=".quickupload.QuickUpload"
-      />
-
-  <z3c:jsonrpc
-      for="*"
-      class=".quickupload.QuickUpload"
-      permission="zojax.ModifyContent"
-      methods="quickuploadAddContent"
       />
 
 </configure>

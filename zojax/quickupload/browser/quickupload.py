@@ -44,12 +44,11 @@ class QuickUpload(object):
         title = self.request.get('title')
         name = title
         obj = ISODocument()
-        obj.title = title or uploadFile.filename
         obj.file = FileData(uploadFile)
-        obj.versionNumber = 1
         obj.docClass = [i for i in getUtility(IVocabularyFactory, 'zojax.isodocument.classes')()][0].value
+        obj.versionNumber = 1
         obj.sequenceNumber = 1
         name = ISODocumentNameChooser(self.context, obj).chooseName(name, obj)
+        obj.title = name
         self.context[name] = obj
         return '{"success": true}'
-#        return '{"success": true, "html": "<a href=%s>%s</a>"}'%(absoluteURL(self.context[name],self.request),name)
