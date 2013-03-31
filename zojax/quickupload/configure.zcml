@@ -9,6 +9,7 @@
    i18n_domain="zojax.quickupload">
 
    <include package="collective.monkeypatcher" />
+   <include package=".browser" />
 
   <!-- quickupload configlet -->
   <configure
@@ -32,4 +33,5 @@
   <!-- translations -->
 
   <i18n:registerTranslations directory="locales"/>
+
 </configure>
