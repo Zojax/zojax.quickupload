@@ -49,21 +49,21 @@ check portlet
     >>> manager.open("http://localhost/content/context.html")
     >>> print manager.contents
     <html>
-    ...<div class="portlet-quickupload-wrapper">...
+    ...<h2 class="z-portlet-header">Quick Upload</h2>...
     </html>
 
 Check Resources
 
-    >>> manager.open("http://localhost/@@/fineuploader/jquery.fineuploader-3.3.1.min.js")
+    >>> manager.open("http://localhost/@@/fineuploader/fineuploader-3.3.1.min.js")
     >>> manager.contents !=''
     True
     >>> manager.open("http://localhost/@@/fineuploader/fineuploader-3.3.1.css")
     >>> manager.contents !=''
     True
-    >>> manager.open("http://localhost/@@/fineuploader/jquery.fineuploader-3.3.1.js")
+    >>> manager.open("http://localhost/@@/fineuploader/fineuploader-3.3.1.js")
     >>> manager.contents !=''
     True
-    >>> manager.open("http://localhost/@@/fineuploader/jquery.fineuploader-3.3.1.min.js")
+    >>> manager.open("http://localhost/@@/fineuploader/fineuploader-3.3.1.min.js")
     >>> manager.contents !=''
     True
     >>> manager.open("http://localhost/@@/fineuploader/iframe.xss.response-3.3.1.js")
@@ -76,16 +76,17 @@ Check Resources
     >>> manager.contents !=''
     True
     
-Upload apload as user
-
-    >>> containerUrl = "http://localhost/"
-    >>> user.post(containerUrl, "{'method':'quickuploadAddContent', 'params':{'data':'data', 'title':'Test Title', 'file': 'File'}}", content_type='application/json')
-    Traceback (most recent call last):
-    ...
-    Unauthorized: (<z3c.jsonrpc.zcml.QuickUpload object at ...>, '__call__', 'zojax.ModifyContent')
-
 Upload apload as manage
 
-    >>> manager.post(containerUrl, "{'method':'quickuploadAddContent', 'params':{'data':'data', 'title':'Test Title', 'file': 'File'}}", content_type='application/json')
+    >>> containerUrl = "http://localhost/content/quickuploadAddContent"
+    >>> manager.post(containerUrl, "fiel", '1')
     >>> 'Test Title' in root.keys()
     True
+
+Upload upload as user
+
+    >>> user.post(containerUrl)
+    Traceback (most recent call last):
+    ...
+    Unauthorized: (<z3c.jsonrpc.zcml.QuickUpload object at ...>, '__call__', 'zojax.permission.AddISODocument')
+

@@ -1,20 +1,9 @@
 <configure
    xmlns="http://namespaces.zope.org/zope"
    xmlns:z3c="http://namespaces.zope.org/z3c"
+   xmlns:browser="http://namespaces.zope.org/browser"
    xmlns:zojax="http://namespaces.zope.org/zojax">
-<!--
-  <zojax:pagelet
-     name="test.html"
-     for="*"
-     template="test.pt"
-     permission="zope.Public" />
 
-  <zojax:portlet
-     title="Test"
-     name="portlet.test"
-     template="testportlet.pt"
-     schema=".interfaces.ITestPortlet"/>
--->
   <zojax:portletManager
      name="columns.left"
      for="*"
@@ -37,6 +26,13 @@
     <!-- support extensions -->
     <implements interface="zojax.extensions.interfaces.IExtensible" />
   </class>
+
+  <browser:page
+      for="*"
+      name="quickuploadAddContent"
+      permission="zojax.isodocument.AddISODocument"
+      class="..browser.quickupload.QuickUpload"
+      />
 
 </configure>
 
