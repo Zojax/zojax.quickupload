@@ -59,7 +59,7 @@
   <browser:page
       for="zojax.content.documents.interfaces.IDocumentsContainer"
       name="quickuploadAddContent"
-      permission="zojax.ModifyContent"
+      permission="zojax.isodocument.AddISODocument"
       class=".quickupload.QuickUpload"
       />
 
