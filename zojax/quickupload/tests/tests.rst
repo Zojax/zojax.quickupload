@@ -5,7 +5,7 @@ zojax.quickupload
     >>> from zope.testbrowser.testing import Browser
     >>> from zojax.extensions.interfaces import IExtensible
     >>> from zope.app.testing.functional import getRootFolder
-    >>> from zojax.quickupload.tests.tests import TestContent
+    >>> from zojax.quickupload.tests.tests import TestContent, encode_multipart_formdata
 
     >>> root = getRootFolder()
     >>> interface.alsoProvides(root, IExtensible)
@@ -76,17 +76,37 @@ Check Resources
     >>> manager.contents !=''
     True
     
-Upload apload as manage
 
-    >>> containerUrl = "http://localhost/content/quickuploadAddContent"
-    >>> manager.post(containerUrl, "fiel", '1')
-    >>> 'Test Title' in root.keys()
-    True
+    >>> containerUrl = "http://localhost/quickuploadAddContent"
+    >>> import os
+    >>> filename = 'testFile.pdf'
+    >>> testfile = file(os.path.join(os.path.split(__file__)[0],filename))
+    >>> qqfile = (('qqfile', filename, testfile.read()),)
+    >>> qqfields = (
+    ...             ('title', filename),
+    ...             ('shortname', filename.split('.')[0]),
+    ...             ('description', 'Test Description'),
+    ...             )
+    >>> encoded_multipart = encode_multipart_formdata(qqfields, qqfile)
 
 Upload upload as user
 
-    >>> user.post(containerUrl)
+    >>> user.post(
+    ...             containerUrl,
+    ...             encoded_multipart[1],
+    ...             encoded_multipart[0],
+    ...             )
     Traceback (most recent call last):
     ...
-    Unauthorized: (<z3c.jsonrpc.zcml.QuickUpload object at ...>, '__call__', 'zojax.permission.AddISODocument')
+    Unauthorized: (...)
+
+Upload upload as manage
+
+    >>> manager.post(
+    ...             containerUrl,
+    ...             encoded_multipart[1],
+    ...             encoded_multipart[0],
+    ...             )
+    >>> 'testFile.pdf' in root.keys()
+    True
 
