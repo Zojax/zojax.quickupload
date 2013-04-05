@@ -51,6 +51,7 @@ class QuickUpload(object):
         obj = factory(uploadFile.filename, uploadFile.headers['content-type'], uploadFile)
         obj.data = FileData(uploadFile)
         obj.shortname = shortname or re.sub(r'(\W)\1*',r'-',re.sub(r'(\W)\1*',r'-', obj.title))
+        obj.description = description or ''
         name = title
         name = INameChooser(self.context, obj).chooseName(name, obj)
         self.context[name] = obj
