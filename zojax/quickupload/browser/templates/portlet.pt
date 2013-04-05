@@ -41,8 +41,8 @@
                     '<span class="qq-upload-spinner"></span>' +
                     '<span class="qq-upload-finished"></span>' +
                     '<span class="qq-upload-file" onClick="qqFineUploadEditDetails(this)"></span>' +
-                    '<input style="display:none" name="title" placeholder="Title" />' +
-                    '<input style="display:none" name="shortname" placeholder="Short name"/>' +
+                    '<input style="display:none" name="title" placeholder="Title" size="10"/>' +
+                    '<input style="display:none" name="shortname" placeholder="Short name" size="10"/>' +
                     '<textarea style="display:none" name="description" placeholder="Description"></textarea>' +
                         '<span class="qq-upload-size"></span>' +
                         '<a class="qq-upload-cancel" href="#">{cancelButtonText}</a>' +
