@@ -110,3 +110,19 @@ Upload upload as manage
     >>> 'testFile.pdf' in root.keys()
     True
 
+Test fields:
+
+    >>> qqfields = (
+    ...             ('title', 'test title'),
+    ...             ('shortname', 'test short name'),
+    ...             ('description', 'Test Description\n new line'),
+    ...             )
+    >>> encoded_multipart = encode_multipart_formdata(qqfields, qqfile)
+    >>> manager.post(
+    ...             containerUrl,
+    ...             encoded_multipart[1],
+    ...             encoded_multipart[0],
+    ...             )
+    >>> root['testFile-2.pdf'].title = qqfields[0][1]
+    >>> root['testFile-2.pdf'].shortname = qqfields[1][1]
+    >>> root['testFile-2.pdf'].description = qqfields[2][1]
