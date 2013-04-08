@@ -44,16 +44,20 @@ class QuickUpload(object):
         uploadFile = self.request.get('qqfile')
         if uploadFile is None:
             return '{"success": false, "error": "File is None"}'
-        title = self.request.get('title') or uploadFile.filename
-        description = self.request.get('description')
+        filename = uploadFile.filename
+        def clear(s):
+            if s:
+                return re.sub(r'\W*',r'', s).lower()
+            else:
+                return ''
+        ext = clear(filename.split('.')[-1])
+        shortname = self.request.get('shortname') or '.'.join(filename.split('.')[:-1])
         factory = FileFactory(self.context)
-        obj = factory(uploadFile.filename, uploadFile.headers['content-type'], uploadFile)
-        name = obj.title
-        shortname = self.request.get('shortname') or re.sub(r'(\W)\1*',r'-',re.sub(r'(\W)\1*',r'-', obj.title))
-        obj.title = title
+        obj = factory(filename, uploadFile.headers['content-type'], uploadFile)
+        obj.title = self.request.get('title') or filename
+        obj.description = self.request.get('description')
         obj.data = FileData(uploadFile)
-        obj.shortname = shortname 
-        obj.description = description or ''
+        name = obj.shortname = '%s.%s' %(clear(shortname),ext)
         name = INameChooser(self.context, obj).chooseName(name, obj)
         self.context[name] = obj
         return '{"success": true}'

@@ -10,7 +10,7 @@
             <script src="/@@/fineuploader/fineuploader-3.3.1.min.js"></script>
             <script>
                 function qqFineUploadEditDetails(e){
-                    $(e).parent().find('input,textarea').show('fast');
+                    $(e).parent().find('input,textarea').toggle('fast');
                 }
                 var manualuploader = new qq.FineUploader({
                     element: $('#manual-fine-uploader')[0],
@@ -29,6 +29,7 @@
                         onUpload: function(id, name){
                             var $e = $(this._listElement.children[id]);
                             var params = { }
+                            $e.find('input,textarea').hide('fast')
                             $e.find('input,textarea').each(function(){
                                 self = $(this);
                                 params[self.attr('name')] = self.attr('value');
@@ -40,7 +41,7 @@
                     '<div class="qq-progress-bar"></div>' +
                     '<span class="qq-upload-spinner"></span>' +
                     '<span class="qq-upload-finished"></span>' +
-                    '<span class="qq-upload-file" onClick="qqFineUploadEditDetails(this)"></span>' +
+                    '<span class="qq-upload-file" onClick="qqFineUploadEditDetails(this)" style="cursor:pointer"></span>' +
                     '<input style="display:none" name="title" placeholder="Title" size="10"/>' +
                     '<input style="display:none" name="shortname" placeholder="Short name" size="10"/>' +
                     '<textarea style="display:none" name="description" placeholder="Description"></textarea>' +
