@@ -15,13 +15,14 @@
      name="portlet.quickupload"
      title="Quick Upload"
      class=".portlet.QuickUploadPortlet"
-     schema=".interfaces.IQuickUploadPortlet" />
+     template="templates/portlet.pt"
+     schema=".interfaces.IQuickUploadPortlet"
+     />
 
   <zojax:pagelet
      type="portlet.view"
      for=".interfaces.IQuickUploadPortlet"
      template="templates/portlet.pt"
-     permission="zojax.ModifyContent"
      />
 
   <zojax:resourcedirectory
@@ -59,8 +60,8 @@
   <browser:page
       for="zojax.content.documents.interfaces.IDocumentsContainer"
       name="quickuploadAddContent"
-      permission="zojax.isodocument.AddISODocument"
       class=".quickupload.QuickUpload"
+      permission="zojax.isodocument.AddISODocument"
       />
 
 </configure>

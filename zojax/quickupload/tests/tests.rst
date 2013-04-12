@@ -46,8 +46,13 @@ check portlet
     >>> manager.open("http://localhost/content/portlets/columns.left/portlet.quickupload/check")
     >>> print manager.contents
     Ok
-    >>> manager.open("http://localhost/content/context.html")
+    >>> manager.open("http://localhost/content/index.html")
     >>> print manager.contents
+    <html>
+    ...<h2 class="z-portlet-header">Quick Upload</h2>...
+    </html>
+    >>> user.open("http://localhost/content/index.html")
+    >>> print user.contents
     <html>
     ...<h2 class="z-portlet-header">Quick Upload</h2>...
     </html>
