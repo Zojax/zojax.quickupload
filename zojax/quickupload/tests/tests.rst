@@ -51,11 +51,6 @@ check portlet
     <html>
     ...<h2 class="z-portlet-header">Quick Upload</h2>...
     </html>
-    >>> user.open("http://localhost/content/index.html")
-    >>> print user.contents
-    <html>
-    ...<h2 class="z-portlet-header">Quick Upload</h2>...
-    </html>
 
 Check Resources
 
