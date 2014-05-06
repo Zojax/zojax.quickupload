@@ -1,4 +1,4 @@
-<div class="z-portlet">
+<div class="z-portlet" id="quickuploadportlet" style="display:none;">
     <h2 class="z-portlet-header">Quick Upload</h2>
     <div class="z-portlet-body">
         <div class="z-portlet-item">
@@ -12,53 +12,73 @@
                 function qqFineUploadEditDetails(e){
                     $(e).parent().find('input,textarea').toggle('fast');
                 }
-                var manualuploader = new qq.FineUploader({
-                    element: $('#manual-fine-uploader')[0],
-                    paramsInBody: true,
-                    request: {
-                        endpoint: 'quickuploadAddContent',
-                        customHeaders:{
-                            //'Content-Type': 'application/json'
+
+                function UrlExists(url, cb){
+                    jQuery.ajax({
+                        url:      url,
+                        dataType: 'text',
+                        type:     'GET',
+                        complete:  function(xhr){
+                            if(typeof cb === 'function')
+                               cb.apply(this, [xhr.status]);
                         }
-                    },
-                    autoUpload: false,
-                    text: {
-                        uploadButton: '<i class="icon-plus icon-white"></i> Select Files'
-                    },
-                    callbacks:{
-                        onUpload: function(id, name){
-                            var $e = $(this._listElement.children[id]);
-                            var params = { }
-                            $e.find('input,textarea').hide('fast')
-                            $e.find('input,textarea').each(function(){
-                                self = $(this);
-                                params[self.attr('name')] = self.attr('value');
-                            })
-                            this.setParams(params,id);
-                        },
-                    },
-                    fileTemplate: '<li>' +
-                    '<div class="qq-progress-bar"></div>' +
-                    '<span class="qq-upload-spinner"></span>' +
-                    '<span class="qq-upload-finished"></span>' +
-                    '<span class="qq-upload-file" onClick="qqFineUploadEditDetails(this)" style="cursor:pointer"></span>' +
-                    '<input style="display:none" name="title" placeholder="Title" size="10"/>' +
-                    '<input style="display:none" name="shortname" placeholder="Short name" size="10"/>' +
-                    '<textarea style="display:none" name="description" placeholder="Description"></textarea>' +
-                        '<span class="qq-upload-size"></span>' +
-                        '<a class="qq-upload-cancel" href="#">{cancelButtonText}</a>' +
-                        '<a class="qq-upload-retry" href="#">{retryButtonText}</a>' +
-                        '<a class="qq-upload-delete" href="#">{deleteButtonText}</a>' +
-                        '<span class="qq-upload-status-text">{statusText}</span>' +
-                        '</li>',
                     });
+                }
+
+                $(document).ready(function() {
+
+                    UrlExists('./quickuploadAddContent', function(status){
+                        if(status === 200){
+                           $('#quickuploadportlet').show();
+                        }
+                    });
+
+                    var manualuploader = new qq.FineUploader({
+                        element: $('#manual-fine-uploader')[0],
+                        paramsInBody: true,
+                        request: {
+                            endpoint: 'quickuploadAddContent',
+                            customHeaders:{
+                                //'Content-Type': 'application/json'
+                            }
+                        },
+                        autoUpload: false,
+                        text: {
+                            uploadButton: '<i class="icon-plus icon-white"></i> Select Files'
+                        },
+                        callbacks:{
+                            onUpload: function(id, name){
+                                var $e = $(this._listElement.children[id]);
+                                var params = { }
+                                $e.find('input,textarea').hide('fast')
+                                $e.find('input,textarea').each(function(){
+                                    self = $(this);
+                                    params[self.attr('name')] = self.attr('value');
+                                })
+                                this.setParams(params,id);
+                            },
+                        },
+                        fileTemplate: '<li>' +
+                        '<div class="qq-progress-bar"></div>' +
+                        '<span class="qq-upload-spinner"></span>' +
+                        '<span class="qq-upload-finished"></span>' +
+                        '<span class="qq-upload-file" onClick="qqFineUploadEditDetails(this)" style="cursor:pointer"></span>' +
+                        '<input style="display:none" name="title" placeholder="Title" size="10"/>' +
+                        '<input style="display:none" name="shortname" placeholder="Short name" size="10"/>' +
+                        '<textarea style="display:none" name="description" placeholder="Description"></textarea>' +
+                            '<span class="qq-upload-size"></span>' +
+                            '<a class="qq-upload-cancel" href="#">{cancelButtonText}</a>' +
+                            '<a class="qq-upload-retry" href="#">{retryButtonText}</a>' +
+                            '<a class="qq-upload-delete" href="#">{deleteButtonText}</a>' +
+                            '<span class="qq-upload-status-text">{statusText}</span>' +
+                            '</li>',
+                    });
+
                     $('#triggerUpload').click(function() {
                         manualuploader.uploadStoredFiles();
                     });
-
-
-
-                </script>
+                });
+            </script>
         </div>
     </div>
 </div>
